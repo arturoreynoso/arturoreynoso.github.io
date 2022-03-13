@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<head>
+<link rel="stylesheet" href="technical_documentation_page.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<nav id="navbar">
+    <header>Classes and Objects in Python</header>
+    <ul>
+      <li><a class="nav-link" href="#Object_oriented_programming">Object-oriented programming</a></li>
+      <li>
+        <a class="nav-link" href="#Objects_revisited"
+          >Objects revisited</a
+        >
+      </li>
+      <li>
+        <a class="nav-link" href="#User_Defined_Classes">User defined classes</a>
+      </li>
+      <li><a class="nav-link" href="#Adding_parameters_to_the_constructor">
+        Adding parameters to the constructor</a></li>
+      <li><a class="nav-link" href="#Adding_other_methods_to_a_class">Adding other 
+        methods to a class</a></li>
+      <li>
+        <a class="nav-link" href="#Objects_as_arguments_and_parameters">Objects as arguments and parameters</a>
+      </li>
+      <li><a class="nav-link" href="#Reference">Reference</a></li>
+    </ul>
+  </nav>
+  <main id="main-doc">
+    <section class="main-section" id="Object_oriented_programming">
+      <header>Object-oriented programming</header>
+      <article>
+        <p>
+            Python is an <strong>object-oriented programming language
+            </strong>. That means it provides features that support 
+            object-oriented programming (<strong>OOP</strong>).
+        </p>
+  
+        <p>
+            Object-oriented programming has its roots in the 1960s, but it 
+            wasn’t until the mid 1980s that it became the main programming 
+            paradigm used in the creation of new software. It was developed 
+            as a way to handle the rapidly increasing size and complexity 
+            of software systems and to make it easier to modify these large
+            and complex systems over time.
+        </p>
+        <p>
+
+            In procedural programming the focus is on writing functions or 
+            <em>procedures</em> which operate on data. In object-oriented 
+            programming the focus is on the creation of <strong>objects
+            </strong> which contain both data and functionality together. 
+            Usually, each object definition corresponds to some object or 
+            concept in the real world and the functions that operate on that 
+            object correspond to the ways real-world objects interact.
+        </p>     
+
+      </article>
+    </section>
+    <section class="main-section" id="Objects_revisited">
+      <header>Objects revisited</header>
+      <article>
+        <p>In Python, every value is actually an object. Whether it be a
+           dictionary, a list, or even an integer, they are all objects.
+           Programs manipulate those objects either by performing computation 
+           with them or by asking them to perform methods. To be more specific, 
+           we say that an object has a <strong>state</strong> and a collection of <strong>methods</strong> that it 
+           can perform. (More about <strong>methods</strong> below.) The state of an object 
+           represents those things that the object knows about itself. The state 
+           is stored in <strong>instance variables</strong>. For example, as we have seen with turtle 
+           objects, each turtle has a state consisting of the turtle’s position, its 
+           color, its heading and so on. Each turtle also has the ability to go 
+           forward, backward, or turn right or left. Individual turtles are different 
+           in that even though they are all turtles, they differ in the specific values 
+           of the individual state attributes (maybe they are in a different location 
+           or have a different heading).
+        </p>
+        <figure id="img-div">
+          <img src="objects_revisited.png" 
+          id = "image" style="width: 500px" class="thin-green-border">
+      </figure>
+      </article>
+    </section>
+    <section class="main-section" id="User_Defined_Classes">
+      <header>User Defined Classes</header>
+      <article>
+        <p>
+            in many cases when we are solving problems we need to create data 
+            objects that are related to the problem we are trying to solve. We 
+            need to create our own classes.
+        </p>
+  
+        <p>
+          As an example, consider the concept of a mathematical point. In two 
+          dimensions, a point is two numbers (coordinates) that are treated 
+          collectively as a single object. Points are often written in 
+          parentheses with a comma separating the coordinates. For example,
+          <code>(0,0)</code> represents the origin, and <code>(x, y)</code> 
+          represents the point <code>x</code> units to the right and <code>y</code> units up from the origin. 
+          This <code>(x,y)</code>is the state of the point.
+        </p>
+
+        <p>
+          Thinking about our diagram above, we could draw a <code>point</code> object as 
+          shown here.
+        </p> 
+        <figure id="img-div">
+          <img src="user_defined_classes.png" 
+          id = "image" style="width: 500px" class="thin-green-border">
+        </figure>
+
+        <p>
+          Some of the typical operations that one associates with points might be to 
+          ask the point for its x coordinate, <code>getX</code>, or to ask for its y 
+          coordinate, <code>getY</code>. You would want these types of functions available to prevent 
+          accidental changes to these instance variables since doing so would 
+          allow you to view the values without accessing them directly. You may 
+          also wish to calculate the distance of a point from the origin, or the 
+          distance of a point from another point, or find the midpoint between two 
+          points, or answer the question as to whether a point falls within a given 
+          rectangle or circle. We’ll shortly see how we can organize these together
+           with the data.
+        </p>
+        <figure id="img-div">
+          <img src="user_defined_classes2.png" 
+            id = "image" style="width: 500px" class="thin-green-border">
+          </figure>
+
+        <p>
+          Now that we understand what a <code>point</code> object might look like, we can define a new class. 
+          We’ll want our points to each have an <code>x</code> and a <code>y</code> attribute, so our first class definition 
+          looks like this.
+        </p>
+        
+        <pre>
+          <code>
+            class Point:
+            &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+              
+            def __init__(self):
+            &emsp; '''Create a new point at the origin'''
+            &emsp; self.x = 0
+            &emsp; self.y = 0
+            p = Point()    &emsp;&emsp;# Instantiate an object of type Point
+            q = Point()    &emsp;&emsp;# and make a second point
+
+            print("Nothing seems to have happened with the points")
+          </code>
+          </pre>
+
+          <p>
+            Class definitions can appear anywhere in a program, but they 
+            are usually near the
+             beginning (after the <code>import</code> statements). The 
+             syntax rules for a class
+              definition are the same asfor other compound statements. 
+              There is a header which 
+              begins with the keyword, <code>class</code>, followed by 
+              the name of the class,
+               and ending with a colon.
+          </p>
+          <p>
+            If the first line after the class header is a string, it 
+            becomes the docstring of
+            the class, and will be recognized by various tools. (This 
+            is also the way 
+            docstrings work in functions.)
+          </p>
+
+          <p>
+            Every class should have a method with the special name <code>__init__</code>. This 
+            <strong>initializer
+             method</strong>, often referred to as the <strong>constructor</strong>, 
+             is automatically called whenever a
+              new instance of <code>Point</code> is created. It gives the 
+              programmer the opportunity to 
+              set up the attributes required within the new instance by 
+              giving them their 
+              initial state values. The <code>self</code> parameter (you could
+               choose any other name, but 
+              nobody ever does!) is automatically set to reference the newly 
+              created object
+               that needs to be initialized.
+          </p>
+
+          <p>
+            During the initialization of the objects, we created two 
+            attributes called x and y for 
+            each object, and gave them both the value 0. You will note that
+             when you run the
+             program, nothing happens. It turns out that this is not quite 
+             the case. In fact,
+              two <code>Points</code> have been created, each having an x 
+              and y coordinate with value 0.
+               However, because we have not asked the program to do anything 
+               with the points, 
+               we don’t see any other result.
+          </p>  
+          <figure id="img-div">
+            <img src="user_defined_classes3.png" 
+              id = "image" style="width: 500px" class="thin-green-border">
+          </figure>
+
+          <p>
+            The following program adds a few print statements. You can see 
+            that the output suggests 
+            that each one is a <code>Point object</code>. However, notice that
+             the <code>is</code> 
+            operator returns <code>False</code> 
+            meaning that they are different objects (we will have more to say
+             about this in a later 
+            section).
+          </p>  
+
+          <pre>
+            <code>
+              class Point:
+              &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+                
+              def __init__(self):
+              &emsp; '''Create a new point at the origin'''
+              &emsp; self.x = 0
+              &emsp; self.y = 0
+              p = Point()    &emsp;&emsp;# Instantiate an object of type Point
+              q = Point()    &emsp;&emsp;# and make a second point
+  
+              print("Nothing seems to have happened with the points")
+              print(p)
+              print(q)
+
+              print(p is q)
+            </code>
+          </pre>
+            
+            <p>
+              A function like <code>Point</code> that creates a new object instance 
+              is called a constructor. Every class 
+              automatically uses the name of the class as the name of the 
+              <strong>constructor</strong> function. The definition
+               of the constructor function is done when you write the <code>__init__</code>
+                function (method) inside the
+                class definition.
+            </p>
+            <p>
+              It may be helpful to think of a class as a factory for making
+              objects. The class itself
+               isn’t an instance of a point, but it contains the machinery to 
+               make point instances. Every 
+               time you call the constructor, you’re asking the factory to make 
+               you a new object. As the 
+               object comes off the production line, its initialization method 
+               is executed to get the object
+                properly set up with it’s factory default settings.
+            </p>  
+            <p>
+            The combined process of “make me a new object” and “get its 
+            settings initialized to the factory 
+            default settings” is called instantiation.
+            </p>  
+      </article>
+    </section>
+    <section class="main-section" id="Adding_parameters_to_the_constructor">
+      <header>Adding parameters to the constructor</header>
+      <article>
+        <p>
+          Our constructor so far can only create points at location
+           <code>(0,0)</code>. To create a point at 
+          position (7, 6) requires that we provide some additional capability 
+          for the user to pass information 
+          to the constructor. Since constructors are simply specially named 
+          functions, we can use parameters 
+          (as we’ve seen before) to provide the specific information.
+        </p>
+
+        <p>
+          We can make our class constructor more generally usable by 
+          putting extra parameters into the 
+          <code>__init__ method</code>, as shown in this example.
+        </p> 
+        <pre>
+          <code>
+            class Point:
+            &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+              
+            def __init__(self):
+
+            &emsp; self.x = initX
+            &emsp; self.y = initY
+
+            p = Point(7, 6)    
+          </code>
+        </pre>
+        <p>
+          Now when we create new points, we supply the x and y coordinates
+           as parameters. When the point is created,
+           the values of initX and initY are assigned to the state of the 
+           object, in the <strong>instance variables</strong> 
+           x and y.
+        </p>  
+        <p>
+          This is a common thing to do in the __init__ method for a class: 
+          take in some parameters and save them as 
+          instance variables. Why is this useful? Keep in mind that the 
+          parameter variables will go away when the
+           method is finished executing. The instance variables, however,
+            will still be accessible anywhere that you 
+           have a handle on the object instance. This is a way of saving
+            those initial values that are provided when 
+           the class constructor is invoked.
+        </p>
+        <figure id="img-div">
+          <img src="adding_parameters_to_the_constructor.png" 
+            id = "image" style="width: 500px" class="thin-green-border">
+        </figure>
+      </article>
+    </section>
+    <section class="main-section" id="Adding_other_methods_to_a_class">
+      <header>Adding other methods to a class</header>
+      <p>
+        The key advantage of using a class like <code>Point</code> rather than
+         something like a simple tuple 
+        <code>(7, 6)</code> now becomes apparent. We can add methods to the 
+        <code>Point</code> class that are 
+        sensible operations for points. Had we chosen to 
+       use a tuple to represent the point, we would not have this capability.
+        Creating a class like 
+       <code>Point</code> brings an exceptional amount of “organizational 
+       power” to our programs, and to our
+        thinking. We can group together the sensible operations, and the 
+        kinds of data they apply to, and each
+         instance of the class can have its own state.
+      </p>
+      <p>
+        A <strong>method</strong> behaves like a function but it is invoked on a 
+        specific instance. For example, with a list
+         bound to variable L, <code>L.append(7)</code> calls the function append, 
+         with the list itself as the first 
+         parameter and 7 as the second parameter. Methods are accessed using dot 
+         notation. This is why <code>L.append(7)</code> 
+         has 2 parameters even though you may think it only has one: the list 
+         stored in the variable <code>L</code> is the 
+         first parameter value and 7 is the second.
+      </p>
+      <p>
+        Let’s add two simple methods to allow a point to give us information about 
+        its state. The <code>getX</code> method, 
+        when invoked, will return the value of the x coordinate.
+      </p>
+      <p>
+        The implementation of this method is straight forward since we already know 
+        how to write functions that
+        return values. One thing to notice is that even though the <code>getX</code> 
+        method does not need any other parameter
+        information to do its work, there is still one formal parameter, 
+        <code>self</code>. As we stated earlier, all methods 
+        defined in a class that operate on objects of that class will have
+        <code>self</code> as their first parameter. Again,
+        this serves as a reference to the object itself which in turn gives access
+         to the state data inside the
+        object.
+      </p>  
+      <pre>
+        <code>
+          class Point:
+          &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+            
+          &emsp;def __init__(self):
+    
+          &emsp;&emsp; self.x = initX
+          &emsp;&emsp; self.y = initY
+
+          &emsp; defX(self):
+          &emsp;&emsp; return self.x
+
+          &emsp; defY(self):
+          &emsp;&emsp; return self.y
+
+          p = Point(7,6)    
+          print(p.getX())
+          print(q.getX())  
+        </code>
+      </pre>
+      <p>
+        Note that the <code>getX</code> method simply returns the value of the 
+        instance variable x from the object self. In other 
+        words, the implementation of the method is to go to the state of the 
+        object itself and get the value of <code>x</code>.
+        Likewise, the <code>getY</code> method looks almost the same.
+      </p>  
+      <p>
+        Let’s add another method, <code>distanceFromOrigin</code>, to see better 
+        how methods work. This method will again not need any 
+        additional information to do its work, beyond the data stored in the 
+        instance variables. It will perform a more 
+        complex task.
+      </p>  
+      <pre>
+        <code>
+          class Point:
+          &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+            
+          &emsp;def __init__(self):
+    
+          &emsp;&emsp; self.x = initX
+          &emsp;&emsp; self.y = initY
+
+          &emsp; defX(self):
+          &emsp;&emsp; return self.x
+
+          &emsp; defY(self):
+          &emsp;&emsp; return self.y
+
+          &emsp; def distanceFromOrigin(self):
+          &emsp;&emsp; return ((self.x ** 2) + (self.y ** 2)) ** 0.5
+
+          p = Point(7,6)    
+          print(p.distanceFromOrigin())  
+        </code>
+      </pre>
+      <p>
+        Notice that the call of <code>distanceFromOrigin</code> does not explicitly 
+        supply an argument to match the <code>self</code> parameter. This is true of 
+        all method calls. The definition will always seem to have one additional 
+        parameter as compared to the invocation.
+      </p>
+    </section>
+    <section class="main-section" id="Objects_as_arguments_and_parameters">
+      <header>Objects as arguments and parameters</header>
+      <article>
+        <p>
+          You can pass an object as an argument to a function, in the usual way.
+        </p>
+        <p>
+          Here is a simple function called <code>distance</code> involving our new 
+          <code>Point</code> objects. The job of this function is to figure out the 
+          distance between two points.
+          <pre>
+            <code>
+              class Point:
+              &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+                
+              &emsp;def __init__(self):
+        
+              &emsp;&emsp; self.x = initX
+              &emsp;&emsp; self.y = initY
+    
+              &emsp; defX(self):
+              &emsp;&emsp; return self.x
+    
+              &emsp; defY(self):
+              &emsp;&emsp; return self.y
+    
+              &emsp; def distanceFromOrigin(self):
+              &emsp;&emsp; return ((self.x ** 2) + (self.y ** 2)) ** 0.5
+              
+              def distance(point1, point2):
+              &emsp; xdiff = point2.getX()-point1.getX()
+              &emsp; ydiff = point2.getY()-point1.getY()
+
+              &emsp; dist = math.sqrt(xdiff**2 + ydiff**2)
+              &emsp; return dist
+              p = Point(4,3)
+              q = Point(0,0)
+              print(distance(p,q))
+            </code>
+          </pre>
+
+          <p>
+            <code>distance</code> takes two points and returns the distance between them. Note that 
+            <code>distance</code> is <strong>not</strong> a method of the Point class. You can see 
+            this by looking at the indentation pattern. It is not inside the class definition. The
+             other way we can know that <code>distance</code> is not a method of Point is that 
+             <code>self</code> is not included as a formal parameter. In addition, we do not invoke 
+             <code>distance</code> using the dot notation.
+          </p>  
+          <p>
+            We <em>could have</em> made distance be a method of the Point class. Then, we would have
+             called the first parameter self, and would have invoked it using the dot notation, as in 
+             the following code. Which way to implement it is a matter of coding style. Both work 
+             correctly. Most programmers choose whether to make functions be stand-alone or methods 
+             of a class based on whether the function semantically seems to be an operation that is 
+             performed on instances of the class. In this case, because distance is really a property 
+             of a pair of points and is symmetric (the distance from a to b is the same as that from b 
+             to a) it makes more sense to have it be a standalone function and not a method. Many heated 
+             discussions have occurred between programmers about such style decisions.
+          </p>
+
+          <pre>
+            <code>
+              class Point:
+              &emsp; ''' Point class for representing and manipulating x,y coordinates.'''
+                
+              &emsp;def __init__(self):
+        
+              &emsp;&emsp; self.x = initX
+              &emsp;&emsp; self.y = initY
+    
+              &emsp; defX(self):
+              &emsp;&emsp; return self.x
+    
+              &emsp; defY(self):
+              &emsp;&emsp; return self.y
+    
+              &emsp; def distanceFromOrigin(self):
+              &emsp;&emsp; return ((self.x ** 2) + (self.y ** 2)) ** 0.5
+              
+              &emsp;def distance(point1, point2):
+              &emsp;&emsp; xdiff = point2.getX()-point1.getX()
+              &emsp;&emsp; ydiff = point2.getY()-point1.getY()
+
+              &emsp;&emsp; dist = math.sqrt(xdiff**2 + ydiff**2)
+              &emsp;&emsp; return dist
+              p = Point(4,3)
+              q = Point(0,0)
+              print(distance(p,q))
+            </code>
+          </pre>
+
+      </article>
+    <section class="main-section" id="Reference">
+      <header>Reference</header>
+      <article>
+        <ul>
+          <li>
+            All the documentation in this page is taken from
+            <a
+              href="https://fopp.umsi.education/books/published/fopp/index.html"
+              target="_blank"
+              >fopp</a
+            >
+          </li>
+        </ul>
+      </article>
+    </section>
+  </main>
+  </body>>
+</html>
